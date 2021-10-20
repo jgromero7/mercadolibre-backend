@@ -6,10 +6,10 @@ const MercadoLibreService = require('../../services/mercadolibre.service');
 // Handle Search
 ItemController.Search = async (req, res) => {
     // Get Q Query
-    const { q: query} = req.query;
+    const { q: query, limit = null} = req.query;
 
     // Search Item
-    const data = await MercadoLibreService.Search(query);
+    const data = await MercadoLibreService.Search(query, limit);
 
     // Return Data
     return res.status(200).send(data);

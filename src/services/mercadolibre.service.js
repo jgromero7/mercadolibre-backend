@@ -2,19 +2,19 @@ const axios = require('axios');
 const MercadoLibreService = {};
 
 // Handle Search
-MercadoLibreService.Search = async (query) => {
+MercadoLibreService.Search = async (query, limit = null) => {
     // Initial Data
     let data = {
         author: {
-            name: "",
-            lastname: "",
+            name: "Jose G",
+            lastname: "Romero C",
         },
         categories: [],
         items: [],
     }
 
     // Handle Search - Api MercadoLibre
-    return await axios.get(`${process.env.API_MERCADOLIBRE}/sites/MLA/search?q=${query}`).then(({data: {results = []}}) => {
+    return await axios.get(`${process.env.API_MERCADOLIBRE}/sites/MLA/search?q=${query}${limit ? '&limit='+limit : ''}`).then(({data: {results = [], filters = []}}) => {
         // Map Data Items
         data.items = results.map(({id = "", title = "", price: amount = 0.0, currency_id: currency, thumbnail: picture = "", address: {state_name = ""}, condition = "", shipping: { free_shipping = false} }) => {
             return {
@@ -32,6 +32,9 @@ MercadoLibreService.Search = async (query) => {
             }
         })
 
+        // Map Data Categories
+        data.categories = filters.filter(({id}) => id === 'category').map(({values = []}) => values.map(({path_from_root = []}) => path_from_root.map(({name = ""}) => name))[0] || [])[0] || [];
+
         // Return Data Map
         return data;
     }).catch((err) => {
@@ -46,8 +49,8 @@ MercadoLibreService.ReadByID = async (id) => {
     // Initial Data
     let data = {
         author: {
-            name: "",
-            lastname: "",
+            name: "Jose G",
+            lastname: "Romero C",
         },
         item: null
     }

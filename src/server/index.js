@@ -14,7 +14,7 @@ module.exports = app => {
     require('dotenv').config({path: fileEnvPath});
 
     // Settings
-    app.set('port', process.env.APP_PORT || 8080);
+    app.set('port', process.env.PORT || 8080);
 
     // middlerware
     app.use(morgan('dev'));    

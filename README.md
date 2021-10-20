@@ -23,7 +23,7 @@ $ git clone https://github.com/jgromero7/mercadolibre-backend.git
 
 Copia el archivo `.env` en base al archivo `.env.example` y modifica los siguientes valores
 ```sh
-    APP_PORT=3000
+    PORT=3000
     API_MERCADOLIBRE=https://api.mercadolibre.com/
 ```
 
